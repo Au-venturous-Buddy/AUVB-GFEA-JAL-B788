@@ -89,7 +89,7 @@ body {
   font-family: "Futura", "Segoe UI", Arial, Helvetica, sans-serif;
   color: #fff;
   background-image: url("../images/WhitePaperBackground.png");
-  background-size: 20%;
+  background-size: cover;
 }
 
 main, .modal {
@@ -529,6 +529,6 @@ ul.bullet-points li {
     }
   }
 
-img {
+img.album-photo {
   border: 3px solid rgb(200, 200, 200);
 }

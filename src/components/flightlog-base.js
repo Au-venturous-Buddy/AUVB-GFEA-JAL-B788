@@ -87,6 +87,7 @@ export default class FlightLogBase extends React.Component {
                                   {contents.images[date].map((image) => (
                                     <ImageListItem key={`${date} ${image.name}`}>
                                       <img
+                                        className="album-photo"
                                         src={image.publicURL}
                                         alt={`${date} ${image.name}`}
                                       />
