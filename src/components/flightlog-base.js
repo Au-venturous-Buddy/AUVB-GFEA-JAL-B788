@@ -64,7 +64,7 @@ export default class FlightLogBase extends React.Component {
             <div className={`m-3`} style={{textAlign: 'center'}}>
             <section lang={contents.currentLanguageCode} className="mb-3">
               <Tabs
-                defaultActiveKey="photos"
+                defaultActiveKey={Object.keys(contents.images).length > 0 ? "photos" : (Object.keys(this.props.videos).length > 0 ? "videos" : "flightlogs")}
               >
                 <Tab eventKey="photos" title="Photos" disabled={Object.keys(contents.images).length === 0}>
                   <section className="py-3 flightlog-main">
@@ -73,6 +73,7 @@ export default class FlightLogBase extends React.Component {
                     </section>
                     <Accordion className="mb-3" flush>
                       {
+                        Object.keys(contents.images).length > 0 ?
                         Object.keys(contents.images).map((date) => (
                           <div className="m-3" key={date}>
                             <Accordion.Item eventKey={date}>
@@ -95,7 +96,8 @@ export default class FlightLogBase extends React.Component {
                               </Accordion.Body>
                             </Accordion.Item>
                           </div>
-                        ))
+                        )) :
+                        <div></div>
                       }
                     </Accordion>
                   </section>
@@ -107,6 +109,7 @@ export default class FlightLogBase extends React.Component {
                       </section>
                       <Accordion className="mb-3" flush>
                       {
+                        Object.keys(this.props.videos).length > 0 ?
                         Object.keys(this.props.videos).map((date) => (
                           <div className="m-3" key={date}>
                             <Accordion.Item eventKey={date}>
@@ -130,7 +133,8 @@ export default class FlightLogBase extends React.Component {
                               </Accordion.Body>
                             </Accordion.Item>
                           </div>
-                        ))
+                        )) :
+                        <div></div>
                       }
                     </Accordion>
                   </section>
