@@ -66,7 +66,7 @@ export default class FlightLogBase extends React.Component {
               <Tabs
                 defaultActiveKey={Object.keys(contents.images).length > 0 ? "photos" : (Object.keys(this.props.videos).length > 0 ? "videos" : "flightlogs")}
               >
-                <Tab eventKey="photos" title="Photos">
+                <Tab eventKey="photos" title="Photos" disabled={!(Object.keys(contents.images).length > 0)}>
                   <section className="py-3 flightlog-main">
                     <section className="mb-3" style={{textAlign: "center"}}>
                       <ResponsiveHeader level={1} maxSize={2} minScreenSize={800}>{contents.metadataItems.childMarkdownRemark.frontmatter.title}</ResponsiveHeader>
@@ -74,7 +74,7 @@ export default class FlightLogBase extends React.Component {
                     <Accordion className="mb-3" flush>
                       {
                         Object.keys(contents.images).length > 0 ?
-                        Object.keys(contents.images).map((date) => (
+                        ((Object.keys(contents.images).sort()).reverse()).map((date) => (
                           <div className="m-3" key={date}>
                             <Accordion.Item eventKey={date}>
                               <Accordion.Header className="hover-shadow-card bold-text justify-content-center" style={{textAlign: "center"}}>
@@ -83,7 +83,7 @@ export default class FlightLogBase extends React.Component {
                                 </ResponsiveHeader>
                               </Accordion.Header>
                               <Accordion.Body>
-                                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                                <ImageList cols={3}>
                                   {contents.images[date].map((image) => (
                                     <ImageListItem key={`${date} ${image.name}`}>
                                       <img
@@ -103,7 +103,7 @@ export default class FlightLogBase extends React.Component {
                     </Accordion>
                   </section>
                 </Tab>
-                <Tab eventKey="videos" title="Videos">
+                <Tab eventKey="videos" title="Videos" disabled={!(Object.keys(this.props.videos).length > 0)}>
                   <section className="py-3 flightlog-main">
                       <section className="mb-3" style={{textAlign: "center"}}>
                         <ResponsiveHeader level={1} maxSize={2} minScreenSize={800}>{contents.metadataItems.childMarkdownRemark.frontmatter.title}</ResponsiveHeader>
@@ -111,7 +111,7 @@ export default class FlightLogBase extends React.Component {
                       <Accordion className="mb-3" flush>
                       {
                         Object.keys(this.props.videos).length > 0 ?
-                        Object.keys(this.props.videos).map((date) => (
+                        ((Object.keys(this.props.videos).sort()).reverse()).map((date) => (
                           <div className="m-3" key={date}>
                             <Accordion.Item eventKey={date}>
                               <Accordion.Header className="hover-shadow-card bold-text justify-content-center" style={{textAlign: "center"}}>
@@ -140,7 +140,7 @@ export default class FlightLogBase extends React.Component {
                     </Accordion>
                   </section>
                 </Tab>
-                <Tab eventKey="flightlogs" title="Flight Logs">
+                <Tab eventKey="flightlogs" title="Flight Logs" disabled={!(this.props.flightLogs.length > 0)}>
                   <section className="py-3 flightlog-main">
                       <section className="mb-3" style={{textAlign: "center"}}>
                         <ResponsiveHeader level={1} maxSize={2} minScreenSize={800}>{contents.metadataItems.childMarkdownRemark.frontmatter.title}</ResponsiveHeader>
@@ -158,6 +158,7 @@ export default class FlightLogBase extends React.Component {
                         </thead>
                         <tbody>
                           {
+                            this.props.flightLogs.length > 0 ?
                             this.props.flightLogs.map((item) => (
                               <tr>
                                 <td>{item["date"]}</td>
@@ -167,7 +168,8 @@ export default class FlightLogBase extends React.Component {
                                 <td>{item["to"]}</td>
                                 <td>{item["status"]}</td>
                               </tr>
-                            ))
+                            )) :
+                            <tr></tr>
                           }
                         </tbody>
                       </Table>
